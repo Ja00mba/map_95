@@ -1,8 +1,10 @@
 import sys
-import requests
-import pygame
 from io import BytesIO
 
+import pygame
+import requests
+spn_valuex = 0.002
+spn_valuey = 0.002
 url = 'https://static-maps.yandex.ru/1.x'
 params = {'ll': '37.53088,55.7031187',
           'spn': '0.002,0.002',
@@ -37,6 +39,14 @@ while running:
     event = pygame.event.wait()
     if event.type == pygame.KEYDOWN:
         should_update = True
+        if event.key == pygame.K_PAGEUP:
+            spn_valuex -= 0.001
+            spn_valuey -= 0.001
+            params['spn'] = str(spn_valuex) + ',' + str(spn_valuey)
+        if event.key == pygame.K_PAGEDOWN:
+            spn_valuex += 0.001
+            spn_valuey += 0.001
+            params['spn'] = str(spn_valuex) + ',' + str(spn_valuey)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
