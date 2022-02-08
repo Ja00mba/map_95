@@ -18,6 +18,10 @@ def update_image():
     return response.content
 
 
+def change_layer(layer_type):
+    params['l'] = layer_type
+
+
 def response_error(response):
     print('error')
     print(response.url)
@@ -37,9 +41,16 @@ while running:
     event = pygame.event.wait()
     if event.type == pygame.KEYDOWN:
         should_update = True
+        if event.key == pygame.K_1:
+            change_layer('map')
+        if event.key == pygame.K_2:
+            change_layer('sat')
+        if event.key == pygame.K_3:
+            change_layer('sat,skl')
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
     if should_update:
         static_image = BytesIO(update_image())
         screen.blit(pygame.image.load(static_image), (0, 0))
